@@ -2,6 +2,8 @@ package classes.solids.dynamic;
 import classes.Particle;
 import classes.liquids.Liquid;
 import classes.solids.Solid;
+
+import java.util.Arrays;
 import java.util.Random;
 
 public class DynamicSolid extends Solid{
@@ -14,15 +16,13 @@ public class DynamicSolid extends Solid{
 
 
     public Object[][] tryMovingToCell(Object[][] tiles, int targetI, int targetJ) {
-        if (this.canGoToCell(targetI, targetJ, tiles)) {
-            if (tiles[targetI][targetJ] instanceof Particle) {
-                this.switchWithAnotherParticle(targetI, targetJ, tiles);
-            } else {
-                this.moveToEmptyCell(targetI, targetJ, tiles);
-            }
-            return tiles;
+        if (tiles[targetI][targetJ] instanceof Particle) {
+            this.switchWithAnotherParticle(targetI, targetJ, tiles);
+        } else {
+            this.moveToEmptyCell(targetI, targetJ, tiles);
         }
-        return null;
+        return tiles;
+        
     }
 
 
@@ -41,9 +41,32 @@ public class DynamicSolid extends Solid{
                 tiles = this.switchWithAnotherParticle(bottomI, bottomJ, tiles);
             }
             else if (bottom instanceof Solid) {
-                System.out.println("BOTTOM IS SOLID");
-            }
+                Object[] neighbors = this.getNeighbors(tiles);
+                Random r = new Random();
+                int direction = r.nextInt(2);
+                if (direction == 0){
+                    if (this.canGoToCell(this.i-1, this.j+1, tiles)== true){
+                        tiles = tryMovingToCell(tiles, this.i-1, this.j+1);
+                    } else {
+                        if (this.canGoToCell(this.i+1, this.j+1, tiles)== true){
+                            tiles = tryMovingToCell(tiles, this.i+1, this.j+1);
 
+                        }
+                    }
+                } else {
+                    if (this.canGoToCell(this.i+1, this.j+1, tiles)== true){
+                        tiles = tryMovingToCell(tiles, this.i+1, this.j+1);
+                    } else {
+                        if (this.canGoToCell(this.i-1, this.j+1, tiles)== true){
+                            tiles = tryMovingToCell(tiles, this.i-1, this.j+1);
+
+                        }
+                    }
+                }
+                    
+
+            }
+                
             
             
             return tiles;
