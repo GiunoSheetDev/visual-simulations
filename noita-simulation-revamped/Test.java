@@ -18,12 +18,12 @@ public class Test {
 
         
 
-        DynamicSolid testSolid = new DynamicSolid(1, 3);
-        DynamicSolid testSolid1 = new DynamicSolid(1, 1);
+        Sand testSolid = new Sand(1, 3);
+        Sand testSolid1 = new Sand(1, 1);
         tiles[1][3] = testSolid;
         tiles[1][1] = testSolid1;
-        DynamicSolid testSolid2 = new DynamicSolid(0, 0);
-        DynamicSolid testSolid3 = new DynamicSolid(2, 0);
+        Sand testSolid2 = new Sand(0, 0);
+        Sand testSolid3 = new Sand(2, 0);
         tiles[0][0] = testSolid2;
         tiles[2][0] = testSolid3;
         
