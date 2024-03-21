@@ -1,6 +1,7 @@
 import java.util.Arrays;
 
 import classes.Particle;
+import classes.liquids.Liquid;
 import classes.solids.Solid;
 import classes.solids.dynamic.DynamicSolid;
 
@@ -47,6 +48,10 @@ public class Tiles {
                 if (currentTile instanceof DynamicSolid) {
                     DynamicSolid solidTile = (DynamicSolid) currentTile;
                     solidTile.update(tiles);
+                } 
+                else if (currentTile instanceof Liquid) {
+                    Liquid liquidTile = (Liquid) currentTile;
+                    liquidTile.update(tiles);
                 }
             }
         }

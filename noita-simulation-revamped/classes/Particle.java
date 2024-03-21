@@ -33,7 +33,16 @@ public class Particle {
         return tiles;
     }
 
-    
+    public Object[][] tryMovingToCell(Object[][] tiles, int targetI, int targetJ) {
+        if (tiles[targetI][targetJ] instanceof Particle) {
+            this.switchWithAnotherParticle(targetI, targetJ, tiles);
+        } else {
+            this.moveToEmptyCell(targetI, targetJ, tiles);
+        }
+        return tiles;
+        
+    }
+
 
     
 }
