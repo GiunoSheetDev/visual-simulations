@@ -4,8 +4,9 @@ public class Body {
     
     private Random random = new Random();
 
-    public double mass = 1.0e12;;
-    public static final double G = -6.67430e-11;
+    public double mass = 1.0e13;
+    public static final double G = 6.67430e-10;
+
 
     final int colorR = 255;
     final int colorB = 0;
@@ -14,6 +15,10 @@ public class Body {
     public Vector2 position = new Vector2();
     public Vector2 velocity = new Vector2();
     public Vector2 acceleration = new Vector2();
+
+    private static final double SOFTENING_FACTOR = 1e5;
+
+
 
     public Body(int posx, int posy) {
         this.position.vector = new double[] {posx, posy};
@@ -46,22 +51,14 @@ public class Body {
         for (int i=0; i < total; i++) {
             Body b = bodies[i];
             if (b == this) continue;
+            double deltax = b.position.x() - this.position.x();
+            double deltay = b.position.y() - this.position.y();
+            double distanceSquared = (deltax*deltax + deltay*deltay) + SOFTENING_FACTOR;
+            double force = G * this.mass * b.mass / (distanceSquared);
+            double angle = Math.atan2(deltay, deltax);
+            delta.vector[0] += force * Math.cos(angle) / this.mass;
+            delta.vector[1] += force * Math.sin(angle) / this.mass;
             
-            Vector2 currentPosition = new Vector2(this.position.x(), this.position.y());
-            
-            currentPosition.sub(b.position);
-            
-            double mag = currentPosition.mag();
-
-            double denominatore = Math.pow(mag, 3);
-            
-            currentPosition.multByDouble(G);
-            
-            currentPosition.multByDouble(b.mass);
-            
-            currentPosition.divByDouble(denominatore);
-
-            delta.sub(currentPosition);
             
         }
         

@@ -6,7 +6,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("flocking sim");
+        window.setTitle("3 body problem");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

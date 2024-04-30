@@ -29,6 +29,7 @@ public class GamePanel extends JPanel  implements ActionListener {
     final int BODIES_NUMBER = 3;
     Body[] planets = new Body[BODIES_NUMBER];
 
+    
 
     
     
@@ -67,9 +68,9 @@ public class GamePanel extends JPanel  implements ActionListener {
 
 
         // populate boid array
-        Body b1 = new Body(800, 400);
-        Body b2 = new Body(800, 396);
-        Body b3 = new Body(803, 400);
+        Body b1 = new Body(600, 500);
+        Body b2 = new Body(900, 600);
+        Body b3 = new Body(750, 350);
 
         planets[0] = b1;
         planets[1] = b2;
