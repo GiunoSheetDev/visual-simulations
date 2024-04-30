@@ -11,7 +11,7 @@ import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 
 import javax.swing.Timer;
-
+ 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -26,12 +26,11 @@ public class GamePanel extends JPanel  implements ActionListener {
 
     boolean restart;
 
-    final int BOIDS_NUMBER = 1000;
-    Boid[] flock = new Boid[BOIDS_NUMBER];
+    final int BODIES_NUMBER = 3;
+    Body[] planets = new Body[BODIES_NUMBER];
 
 
-    // slider to change values
-    public JFrame sliderWindow;
+    
     
 
 
@@ -68,9 +67,13 @@ public class GamePanel extends JPanel  implements ActionListener {
 
 
         // populate boid array
-        for (int i = 0; i < flock.length; i++) {
-            flock[i] = new Boid(SCREEN_WIDTH, SCREEN_HEIGHT);
-        }
+        Body b1 = new Body(800, 400);
+        Body b2 = new Body(800, 396);
+        Body b3 = new Body(803, 400);
+
+        planets[0] = b1;
+        planets[1] = b2;
+        planets[2] = b3;
 
 
     }
@@ -108,13 +111,13 @@ public class GamePanel extends JPanel  implements ActionListener {
         if (restart) start();
 
         // move all boids of the flock
-        for (Boid b: flock){
-            Boid[] flockmates = b.getFlockMates(flock);
-            b.alignment(flockmates); // add custom multipliers to customize flock behavior
-            b.cohesion(flockmates);
-            b.separation(flockmates);
-            b.update(SCREEN_WIDTH, SCREEN_HEIGHT);
+        for (Body b: planets){
+            b.feelGravity(planets);
+            b.update();
+            
+            
         }
+        
 
         repaint(); // to call paintComponent
 
@@ -134,10 +137,11 @@ public class GamePanel extends JPanel  implements ActionListener {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 
-        for (Boid b: flock) {
+        for (Body b: planets) {
             g2.setColor(new Color(b.colorR, b.colorG, b.colorB));
+            g2.fillOval((int)b.position.x() - 5, (int)b.position.y() - 5, 10, 10); // actual point
 
-            
+            /*
             double angle = Math.atan2(b.velocity.y(), b.velocity.x()) + 90;
             // setup transform
             AffineTransform oldTransform = g2.getTransform();
@@ -159,8 +163,9 @@ public class GamePanel extends JPanel  implements ActionListener {
                 (int)b.position.y() + L3
             }, 3);
 
-
-            g2.setTransform(oldTransform);
+            
+            g2.setTransform(oldTransform); 
+            */
 
         }
 

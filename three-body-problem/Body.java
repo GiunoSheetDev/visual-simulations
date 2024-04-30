@@ -1,11 +1,15 @@
 import java.util.Arrays;
+import java.util.Random;
 public class Body {
     
-    public double mass = 10;
-    public static final double G = -6.674e-11;
+    private Random random = new Random();
 
+    public double mass = 1.0e12;;
+    public static final double G = -6.67430e-11;
 
-
+    final int colorR = 255;
+    final int colorB = 0;
+    final int colorG = 0;
 
     public Vector2 position = new Vector2();
     public Vector2 velocity = new Vector2();
@@ -33,6 +37,7 @@ public class Body {
         this.position.add(this.velocity);
         this.velocity.add(this.acceleration);
         this.acceleration.vector = new double[2];
+        
     }
 
     public void feelGravity(Body[] bodies) {
@@ -56,10 +61,10 @@ public class Body {
             
             currentPosition.divByDouble(denominatore);
 
-            delta.add(currentPosition);
+            delta.sub(currentPosition);
             
         }
-        delta.print();
+        
         this.acceleration.add(delta);
         
     }
