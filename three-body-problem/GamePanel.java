@@ -8,14 +8,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 import javax.swing.Timer;
- 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class GamePanel extends JPanel  implements ActionListener {
+public class GamePanel extends JPanel implements ActionListener {
 
     static final int SCREEN_WIDTH = 1600;
     static final int SCREEN_HEIGHT = 800;
@@ -29,17 +32,11 @@ public class GamePanel extends JPanel  implements ActionListener {
     final int BODIES_NUMBER = 3;
     Body[] planets = new Body[BODIES_NUMBER];
 
+    private BufferedImage canvas;
+    private JLabel label;
     
 
-    
-    
-
-
-    public static void main(String[] args) {
-        System.out.println("res: " + SCREEN_HEIGHT + "(height) x " + SCREEN_WIDTH + "(width)");
-    }
-
-    GamePanel() {
+    public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT)); // set window size
         this.setBackground(Color.black);
         this.setDoubleBuffered(true); // all drawing from this component will be done in an offscreen painting buffer -> improves performance
@@ -48,15 +45,15 @@ public class GamePanel extends JPanel  implements ActionListener {
         this.requestFocusInWindow();
         this.addKeyListener(new MyKeyAdapter());
 
-        
-
+        canvas = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        label = new JLabel(new ImageIcon(canvas));
+        this.add(label);
 
         System.out.println("ready.");
     }
 
     public void start() {
         restart = false;
-       
 
         System.out.println("game loop running, fps: " + FPS);
         if (timer == null) {
@@ -65,24 +62,19 @@ public class GamePanel extends JPanel  implements ActionListener {
             timer.start();
         }
 
-
-
         // populate boid array
-        Body b1 = new Body(600, 500);
-        Body b2 = new Body(900, 600);
-        Body b3 = new Body(750, 350);
+        Body b1 = new Body(600, 400, 255, 0, 0);
+        Body b2 = new Body(900, 500, 0, 255, 0);
+        Body b3 = new Body(750, 250, 0, 0, 255);
 
         planets[0] = b1;
         planets[1] = b2;
         planets[2] = b3;
-
-
     }
 
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            // System.out.println(e.getKeyCode());
             switch (e.getKeyCode()) {
                 case 32:
                     // if space pressed
@@ -98,81 +90,23 @@ public class GamePanel extends JPanel  implements ActionListener {
 
     // called when the timer ends
     public void actionPerformed(ActionEvent event) {
-        // update the screen
-        //System.out.println("starting new cycle");
-
-
-        // System.out.print(this.sliderPanel.getAlignmentMult());
-        // System.out.print(" - ");
-        // System.out.print(this.sliderPanel.getCohesionMult());
-        // System.out.print(" - ");
-        // System.out.print(this.sliderPanel.getSeparationMult());
-        // System.out.println();
-
         if (restart) start();
-
-        // move all boids of the flock
-        for (Body b: planets){
+    
+        // Move all boids of the flock
+        for (Body b : planets) {
             b.feelGravity(planets);
             b.update();
-            
-            
         }
-        
-
-        repaint(); // to call paintComponent
-
-    }
     
-    // some constants to create the boids triangles
-    int L = 10;
-    int L2 = 5;
-    int L3 = 7;
-
-    // called by repaint()
-    public void paintComponent(Graphics g) {
-        // builtin method
-        super.paintComponent(g);
-
-        Graphics2D g2 = (Graphics2D)g; // 2d gives more access on geometry, coords, ...
+        // Update the canvas with the new positions
+        Graphics2D g2 = canvas.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-
-        for (Body b: planets) {
+        for (Body b : planets) {
             g2.setColor(new Color(b.colorR, b.colorG, b.colorB));
-            g2.fillOval((int)b.position.x() - 5, (int)b.position.y() - 5, 10, 10); // actual point
-
-            /*
-            double angle = Math.atan2(b.velocity.y(), b.velocity.x()) + 90;
-            // setup transform
-            AffineTransform oldTransform = g2.getTransform();
-
-            AffineTransform transform = new AffineTransform();
-            transform.rotate(angle, b.position.x(), b.position.y());
-            g2.setTransform(transform);
-
-            // draw triangles
-            // can use drawPolygon or fillPolygon
-            g2.fillPolygon(new int[]{
-                (int)b.position.x(),
-                (int)b.position.x() + L2,
-                (int)b.position.x() - L2
-            },
-            new int[]{
-                (int)b.position.y() - L,
-                (int)b.position.y() + L3,
-                (int)b.position.y() + L3
-            }, 3);
-
-            
-            g2.setTransform(oldTransform); 
-            */
+            g2.fillOval((int) b.position.x() - 5, (int) b.position.y() - 5, 10, 10); // Draw the planet at its current position
 
         }
-
         g2.dispose();
-
+        label.repaint(); // Trigger a repaint of the JLabel to reflect the updated canvas
     }
-
-
 }

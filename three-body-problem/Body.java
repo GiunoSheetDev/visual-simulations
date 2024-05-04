@@ -1,16 +1,16 @@
 import java.util.Arrays;
 import java.util.Random;
 public class Body {
-    
+   
     private Random random = new Random();
 
     public double mass = 1.0e13;
     public static final double G = 6.67430e-10;
 
 
-    final int colorR = 255;
-    final int colorB = 0;
-    final int colorG = 0;
+    final int colorR;
+    final int colorB;
+    final int colorG;
 
     public Vector2 position = new Vector2();
     public Vector2 velocity = new Vector2();
@@ -20,15 +20,18 @@ public class Body {
 
 
 
-    public Body(int posx, int posy) {
+    public Body(int posx, int posy, int colorR, int colorG, int colorB) {
         this.position.vector = new double[] {posx, posy};
+        this.colorR = colorR;
+        this.colorG = colorG;
+        this.colorB = colorB;
     }
 
 
     public static void main(String[] args) {
-        Body b1 = new Body(1, 1);
-        Body b2 = new Body(1, 4);
-        Body b3 = new Body(5, 1);
+        Body b1 = new Body(1, 1, 255, 0, 0);
+        Body b2 = new Body(1, 4, 0, 255, 0);
+        Body b3 = new Body(5, 1, 0, 0, 255);
         Body[] bodies = new Body[3];
         bodies[0] = b1;
         bodies[1] = b2;
@@ -39,6 +42,7 @@ public class Body {
     }
 
     public void update() {
+        
         this.position.add(this.velocity);
         this.velocity.add(this.acceleration);
         this.acceleration.vector = new double[2];
