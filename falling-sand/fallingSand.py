@@ -110,7 +110,7 @@ tiles = getTiles()
 
 run = True
 while run:
-    clock.tick(fps)
+    clock.tick(60)
 
   
     drawBackground()
@@ -131,6 +131,8 @@ while run:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 run = False
+            if event.key == pygame.K_g:
+                print(sum(sum(1 for x in row if x == 1) for row in tiles))
     
     if pygame.mouse.get_pressed()[0]:
         if tiles[currentTile[0]][currentTile[1]] == 0:
