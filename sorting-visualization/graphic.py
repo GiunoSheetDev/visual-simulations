@@ -53,7 +53,7 @@ while run:
     drawBackground(ls)
     
     #ls = bubbleSort(ls)
-    ls = bogoSort(ls)
+    #ls = bogoSort(ls)
     #ls = quick_sort(ls)
     if ls == sortedList:
         print("Sorted")
