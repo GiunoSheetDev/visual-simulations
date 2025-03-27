@@ -17,12 +17,12 @@ void printVector(vector<string> vector) {
 
 string generateGrid(int stringLen, bool isStartingGrid) {
     string out(stringLen, ' ');
-    if (isStartingGrid == true) out.at(50) = '1';
+    if (isStartingGrid == true) out.at((stringLen / 2)+1) = '1';
     return out;
 }
 
 
-string intToBinary(long num) {
+string intTo8bitBinary(long num) {
     // max is 8 bits since there are 256 rules
     vector<long> powerOfTwos = {128, 64, 32, 16, 8, 4, 2, 1};
 
@@ -93,9 +93,9 @@ string updateCells(string grid, unordered_map<string, string> ruleDict) {
 
 
 void cellularAutomata(int rule, int rows) {
-    string ruleInBinary = intToBinary(rule);
+    string ruleInBinary = intTo8bitBinary(rule);
     unordered_map<string, string> ruleDict = generateDict(ruleInBinary);
-    string grid = generateGrid(101, true);
+    string grid = generateGrid(201, true);
 
     for (int y =0; y < rows; y++) {
         cout << grid << endl;
@@ -110,8 +110,8 @@ int main() {
     
 
     int rule = 22;
-    string ruleBinary = intToBinary(rule);
-    cellularAutomata(rule, 50);
+    string ruleBinary = intTo8bitBinary(rule);
+    cellularAutomata(rule, 200);
     
 
     return 0;
