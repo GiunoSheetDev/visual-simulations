@@ -172,7 +172,8 @@ def run():
     print("for random generation press r\n"
     "left mouse click to add wanted points\n"
     "to choose euclidean distance (default) press e \n"
-    "to choose manhattan distance press m")
+    "to choose manhattan distance press m\n"
+    "press space to clear the screen")
 
     delaunay = []
     
@@ -191,7 +192,7 @@ def run():
         if pygame.mouse.get_just_pressed()[0]:
             placePoint(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], pointList)
             delaunay = delaunayTriangulation(pointList, screenw, screenh, typeOfLen)
-            print(delaunay)
+            
 
 
 
@@ -219,43 +220,13 @@ def run():
                 if event.key == pygame.K_m:
                     typeOfLen = "Manhattan"
                     print("Distance chosen: Manhattan")
+                
+                if event.key == pygame.K_SPACE:
+                    pointList = []
+                    delaunay = []
 
         pygame.display.update()
 
 
 
-<<<<<<< HEAD
 run()
-=======
-run()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> 5e3e952cd2b2945e3e2d1f0721b35733de873855
