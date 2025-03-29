@@ -16,6 +16,8 @@ class Triangle:
         self.edges = [  [self.a, self.b],
                         [self.b, self.c],
                         [self.c, self.a]]
+        self.neighbors = []
+        self.unconnectedEdges = []
         self.circumcenter = getCircumcenter(self.a, self.b, self.c)
 
     def isPointInCircumcircle(self, point: pygame.Vector2, typeOfLen: str):
@@ -41,23 +43,27 @@ class Triangle:
 
 
 def getCircumcenter(a: pygame.Vector2 , b: pygame.Vector2, c: pygame.Vector2) -> pygame.Vector2:
-    ax, ay = a
-    bx, by = b
-    cx, cy = c
+    try:
+        ax, ay = a
+        bx, by = b
+        cx, cy = c
 
-    d = 2 *(ax*(by-cy) + bx*(cy-ay) + cx*(ay-by))
+        d = 2 *(ax*(by-cy) + bx*(cy-ay) + cx*(ay-by))
 
-    ux = (1/d) *(   (ax**2 + ay**2)*(by-cy) +
-                    (bx**2 + by**2)*(cy-ay) +
-                    (cx**2 + cy**2)*(ay-by)
-    )
-    uy = (1/d)  *(
-                    (ax**2 + ay**2)*(cx-bx)+
-                    (bx**2 + by**2)*(ax-cx)+
-                    (cx**2 + cy**2)*(bx-ax)
-    )
-
-    return pygame.Vector2(ux, uy)
+        ux = (1/d) *(   (ax**2 + ay**2)*(by-cy) +
+                        (bx**2 + by**2)*(cy-ay) +
+                        (cx**2 + cy**2)*(ay-by)
+        )
+        uy = (1/d)  *(
+                        (ax**2 + ay**2)*(cx-bx)+
+                        (bx**2 + by**2)*(ax-cx)+
+                        (cx**2 + cy**2)*(bx-ax)
+        )
+        return pygame.Vector2(ux, uy)
+    except:
+        print("you placed 2 points too close to each other! (division by 0)")
+        pygame.quit()
+    
 
 def isLineEqual(l1 : list[pygame.Vector2, pygame.Vector2], l2: list[pygame.Vector2, pygame.Vector2]):
 
@@ -81,6 +87,8 @@ def placePoint(x: int, y: int, pointList: list):
     pointList.append(pygame.Vector2(x, y))
 
 def delaunayTriangulation(pointList: list, screenw: int, screenh: int, typeOfLen: str):
+
+
     '''
 function BowyerWatson (pointList)
       // pointList is a set of coordinates defining the points to be triangulated
@@ -228,5 +236,5 @@ def run():
         pygame.display.update()
 
 
-
-run()
+if __name__ == "__main__":
+    run()
