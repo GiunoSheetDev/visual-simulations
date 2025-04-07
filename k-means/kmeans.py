@@ -28,14 +28,18 @@ def generatePoints(clusterNum: int, pointsPerCluster: int) -> list:
 def generateCentroids(centroidNum: int) -> list[int]:
     return [[random.randint(0, 800), random.randint(0, 800)] for _ in range(centroidNum)]
 
-def assignPointsToClusters(points: list[list[int, int]], centroids: list[int]):
+def assignPointsToClusters(points: list[list[int, int]], centroids: list[int], distanceType: bool):
     clusters = [[] for _ in range(len(centroids))]
 
     for point in points:
         distances = []
 
         for centroid in centroids:
-            dist = sqrt((point[0] - centroid[0]) **2 + (point[1]- centroid[1])**2)
+            if distanceType:
+                dist = abs(point[0]-centroid[0]) + abs(point[1]-centroid[1])
+            else:
+                dist = sqrt((point[0] - centroid[0]) **2 + (point[1]- centroid[1])**2)
+            
             distances.append(dist)
         
         closestCentroidIndex = distances.index(min(distances))
@@ -107,11 +111,13 @@ def run():
 
     isShowingClusters = True
     isShowingAnimation = False
+    isDistanceManhattan = False
     run = True
     
     print(  "Press f to show clusters color.\n" \
             "Press a to show animation with step half a second.\n"
-            "Press Spacebar to generate a new set of points.")
+            "Press Spacebar to generate a new set of points.\n"
+            "Press d to change distance used. (Euclidean / Manhattan)")
 
 
     while run:
@@ -120,7 +126,7 @@ def run():
         if isShowingAnimation:
             pygame.time.wait(500)
 
-        clusters = assignPointsToClusters(points, centroids)
+        clusters = assignPointsToClusters(points, centroids, isDistanceManhattan)
         centroids = updateCentroidPosition(clusters)
        
         
@@ -144,6 +150,10 @@ def run():
                 if event.key == pygame.K_a:
                     isShowingAnimation = not isShowingAnimation
                     print("IsShowingAnimationStep: ", isShowingAnimation)
+                if event.key == pygame.K_d:
+                    isDistanceManhattan = not isDistanceManhattan
+                    print("IsDistanceUsedManhattan: ", isDistanceManhattan)
+
 
         pygame.display.update()
 
