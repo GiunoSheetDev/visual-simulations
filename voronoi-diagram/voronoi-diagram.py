@@ -74,6 +74,19 @@ def run():
     isShowingDelaunay = False
     isShowingVoronoi = True
 
+
+    pointList = []
+    
+    for i in range(100):
+        x = randint(1, screenw-1)
+        y = randint(1, screenh-1)
+
+        pointList.append(pygame.Vector2(x, y))
+    delaunay = delaunayTriangulation(pointList, screenw, screenh, "Euclidean")
+    voronoi = voronoiTesselation(delaunay)
+
+
+
     
     run = True
 
@@ -103,10 +116,10 @@ def run():
         if isShowingVoronoi:
 
             for point in pointList:
-                pygame.draw.circle(screen,(255,255,255), point, 5, 1)
+                pygame.draw.circle(screen,(255,0, 0), point, 5, 1)
             
             for line in voronoi:
-                pygame.draw.aaline(screen, (255, 0, 0), line[0], line[1])
+                pygame.draw.aaline(screen, (255, 255, 255), line[0], line[1])
 
             '''
             for triangle in delaunay:
