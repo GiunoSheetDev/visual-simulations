@@ -113,7 +113,7 @@ while run:
     if runSimulation:
         tiles = newTiles
     else:
-        if pygame.mouse.get_pressed()[0]: #left click mouse to draw cell
+        if pygame.mouse.get_just_pressed()[0]: #left click mouse to draw cell
             if tiles[currentTile[0]][currentTile[1]] == 0:
                 tiles[currentTile[0]][currentTile[1]] = 1
         if pygame.mouse.get_pressed()[2]: #right click mouse to erase cell
