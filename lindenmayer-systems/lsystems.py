@@ -2,13 +2,13 @@ import turtle
 
 
 class LSystem:
-    def __init__(self, turtle : turtle.Turtle, variables: list, costants : list | None, axiom: str, rules : list[tuple], angle: int = 90, startingAngle: int = 0, recursionDepth: int = 5, startingPos: tuple = (0, 0)):        
+    def __init__(self, turtle : turtle.Turtle, variables: list, costants : list | None, axiom: str, rules : list[tuple], turningAngle: int = 90, startingAngle: int = 0, recursionDepth: int = 5, startingPos: tuple = (0, 0)):        
         self.variables = variables
         self.costants = costants
         self.axiom = axiom
         self.rules = rules
         self.drawRules = {}
-        self.angle = angle
+        self.turningAngle = turningAngle
         self.startingAngle = startingAngle
         self.recursionDepth = recursionDepth
         self.startingPos = startingPos
@@ -80,7 +80,7 @@ if __name__ == "__main__":
                                          variables=["A", "B"],
                                          costants=["+", "-"],
                                          axiom="A",
-                                         angle= 60,
+                                         turningAngle= 60,
                                          rules=[("A", "B-A-B"), ("B", "A+B+A")],
                                          recursionDepth=6,
                                          startingPos=(-300, -250))
@@ -88,8 +88,8 @@ if __name__ == "__main__":
     sierpinski_arrowhead_curve.drawRules = {
         "A": lambda: t.forward(8),
         "B": lambda: t.forward(8),
-        "+": lambda: t.left(sierpinski_arrowhead_curve.angle),
-        "-": lambda: t.right(sierpinski_arrowhead_curve.angle)
+        "+": lambda: t.left(sierpinski_arrowhead_curve.turningAngle),
+        "-": lambda: t.right(sierpinski_arrowhead_curve.turningAngle)
     }
 
     #sierpinski_arrowhead_curve.draw(screen)
@@ -115,13 +115,13 @@ if __name__ == "__main__":
                          axiom="F",
                          rules= [("F", "F+F-F-F+F")],
                          startingPos=(-350, -250),
-                         angle=90,
+                         turningAngle=90,
                          recursionDepth=6)
     
     koch_curve.drawRules = {
         "F" : lambda: t.forward(1),
-        "+" : lambda: t.left(koch_curve.angle),
-        "-" : lambda: t.right(koch_curve.angle)
+        "+" : lambda: t.left(koch_curve.turningAngle),
+        "-" : lambda: t.right(koch_curve.turningAngle)
     }
 
     #koch_curve.draw(screen)
@@ -131,7 +131,7 @@ if __name__ == "__main__":
                                   costants=["+", "-"],
                                   axiom="F-G-G",
                                   rules=[("F", "F-G+F+G-F"), ("G", "GG")],
-                                  angle=120,
+                                  turningAngle=120,
                                   startingAngle=90,
                                   startingPos=(-350, -250),
                                   recursionDepth=6)
@@ -139,8 +139,8 @@ if __name__ == "__main__":
     sierpinski_triangle.drawRules = {
         "F": lambda: t.forward(8),
         "G": lambda: t.forward(8),
-        "+": lambda: t.left(sierpinski_triangle.angle),
-        "-": lambda: t.right(sierpinski_triangle.angle)}
+        "+": lambda: t.left(sierpinski_triangle.turningAngle),
+        "-": lambda: t.right(sierpinski_triangle.turningAngle)}
     
     #sierpinski_triangle.draw(screen)
     
@@ -150,15 +150,15 @@ if __name__ == "__main__":
                            costants=["+", "-"],
                            axiom= "F",
                            rules=[("F", "F+G"), ("G", "F-G")],
-                           angle=90,
+                           turningAngle=90,
                            startingAngle=0,
                            recursionDepth=14)
     
     dragon_curve.drawRules ={
         "F": lambda: t.forward(8),
         "G": lambda: t.forward(8),
-        "+": lambda: t.left(dragon_curve.angle),
-        "-": lambda: t.right(dragon_curve.angle)
+        "+": lambda: t.left(dragon_curve.turningAngle),
+        "-": lambda: t.right(dragon_curve.turningAngle)
         }
     
     #dragon_curve.draw(screen)
@@ -168,7 +168,7 @@ if __name__ == "__main__":
                          costants=["[", "]"],
                          axiom= "0",
                          rules= [("1", "11"), ("0", "1[0]0")],
-                         angle=45,
+                         turningAngle=45,
                          recursionDepth=7,
                          startingAngle=90,
                          startingPos=(0, -250))
@@ -176,8 +176,8 @@ if __name__ == "__main__":
     binaryTree.drawRules = {
         "0" : lambda : t.forward(4),
         "1" : lambda : t.forward(4),
-        "[" : lambda : (binaryTree.push(), t.left(binaryTree.angle)),
-        "]" : lambda : (binaryTree.pop(), t.setheading(binaryTree.currentangle - binaryTree.angle))
+        "[" : lambda : (binaryTree.push(), t.left(binaryTree.turningAngle)),
+        "]" : lambda : (binaryTree.pop(), t.setheading(binaryTree.currentangle - binaryTree.turningAngle))
     }
 
     #binaryTree.draw(screen)
@@ -187,7 +187,7 @@ if __name__ == "__main__":
                            costants= ["+", "-", "[", "]"],
                            axiom= "-X",
                            rules=[("X", "F+[[X]-X]-F[-FX]+X"), ("F", "FF")],
-                           angle=25,
+                           turningAngle=25,
                            startingAngle= 90,
                            recursionDepth=8,
                            startingPos=(-350, -250))
@@ -195,12 +195,31 @@ if __name__ == "__main__":
     fractalPlant.drawRules = {
         "F" : lambda : t.forward(1),
         "X" : lambda : None,
-        "-" : lambda : t.right(binaryTree.angle),
-        "+" : lambda : t.left(binaryTree.angle),
+        "-" : lambda : t.right(binaryTree.turningAngle),
+        "+" : lambda : t.left(binaryTree.turningAngle),
         "[" : lambda : binaryTree.push(),
         "]" : lambda : binaryTree.pop()
     }
 
     fractalPlant.draw(screen)
+
+    hilbertCurve = LSystem( t, 
+                            variables=["A", "B"],
+                            costants=["F", "+", "-"],
+                            axiom= "A",
+                            rules=[("A", "+BF-AFA-FB+"), ("B", "-AF+BFB+FA-")],
+                            turningAngle = 90,
+                            recursionDepth= 6,
+                            startingPos=(-350, -250))
+
+    hilbertCurve.drawRules = {
+        "F" : lambda: t.forward(8),
+        "+" : lambda: t.left(hilbertCurve.turningAngle),
+        "-" : lambda: t.right(hilbertCurve.turningAngle),
+        "A" : lambda: None,
+        "B" : lambda: None
+    }
+
+    #hilbertCurve.draw(screen)
 
     turtle.done()
