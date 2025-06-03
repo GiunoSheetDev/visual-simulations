@@ -189,11 +189,11 @@ if __name__ == "__main__":
                            rules=[("X", "F+[[X]-X]-F[-FX]+X"), ("F", "FF")],
                            angle=25,
                            startingAngle= 90,
-                           recursionDepth=6,
+                           recursionDepth=8,
                            startingPos=(-350, -250))
     
     fractalPlant.drawRules = {
-        "F" : lambda : t.forward(4),
+        "F" : lambda : t.forward(1),
         "X" : lambda : None,
         "-" : lambda : t.right(binaryTree.angle),
         "+" : lambda : t.left(binaryTree.angle),
