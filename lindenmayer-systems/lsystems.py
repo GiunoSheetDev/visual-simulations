@@ -201,7 +201,7 @@ if __name__ == "__main__":
         "]" : lambda : binaryTree.pop()
     }
 
-    fractalPlant.draw(screen)
+    #fractalPlant.draw(screen)
 
     hilbertCurve = LSystem( t, 
                             variables=["A", "B"],
@@ -221,5 +221,22 @@ if __name__ == "__main__":
     }
 
     #hilbertCurve.draw(screen)
+
+    levyCurve = LSystem(t, 
+                        variables=["F"],
+                        costants=["+", "-"],
+                        axiom="F",
+                        rules=[("F", "+F--F+")],
+                        turningAngle=45,
+                        recursionDepth=12,
+                        startingPos=(-200, -150))
+
+    levyCurve.drawRules = {
+        "F": lambda: t.forward(6),
+        "+": lambda: t.left(levyCurve.turningAngle),
+        "-": lambda: t.right(levyCurve.turningAngle)
+    }
+
+    levyCurve.draw(screen)
 
     turtle.done()
