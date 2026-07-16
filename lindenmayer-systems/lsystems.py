@@ -161,7 +161,7 @@ if __name__ == "__main__":
         "-": lambda: t.right(dragon_curve.turningAngle)
         }
     
-    #dragon_curve.draw(screen)
+    dragon_curve.draw(screen)
 
     binaryTree = LSystem(t,
                          variables=["0", "1"],
@@ -237,6 +237,6 @@ if __name__ == "__main__":
         "-": lambda: t.right(levyCurve.turningAngle)
     }
 
-    levyCurve.draw(screen)
+    #levyCurve.draw(screen)
 
     turtle.done()

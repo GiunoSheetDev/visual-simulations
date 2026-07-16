@@ -1,0 +1,76 @@
+{
+    "Sol" :{
+        "Mercury": {
+            "mass_kg": 3.3011e23,
+            "diameter_m": 4879400,
+            "color": [169, 169, 169],
+            "draw_radius": 0.17,
+            "eccentricity": 0.205630,
+            "semimajor_axis_m": 57909227000,
+            "scale_multiplier": 50
+        },
+        "Venus": {
+            "mass_kg": 4.8675e24,
+            "diameter_m": 12103600,
+            "color": [230, 190, 138],
+            "draw_radius": 0.25,
+            "eccentricity": 0.006772,
+            "semimajor_axis_m": 108209475000,
+            "scale_multiplier": 50
+        },
+        "Terra": {
+            "mass_kg": 5.97237e24,
+            "diameter_m": 12742000,
+            "color": [100, 149, 237],
+            "draw_radius": 0.25,
+            "eccentricity": 0.0167086,
+            "semimajor_axis_m": 149597870700,
+            "scale_multiplier": 30
+        },
+        "Mars": {
+            "mass_kg": 6.4171e23,
+            "diameter_m": 6779200,
+            "color": [188, 39, 50],
+            "draw_radius": 0.21,
+            "eccentricity": 0.0934,
+            "semimajor_axis_m": 227943824000,
+            "scale_multiplier":30
+        },
+        "Jupiter": {
+            "mass_kg": 1.8982e27,
+            "diameter_m": 139820000,
+            "color": [216, 202, 157],
+            "draw_radius": 0.85,
+            "eccentricity": 0.0489,
+            "semimajor_axis_m": 778340821000,
+            "scale_multiplier":2
+        },
+        "Saturn": {
+            "mass_kg": 5.6834e26,
+            "diameter_m": 116460000,
+            "color": [234, 214, 184],
+            "draw_radius": 0.71,
+            "eccentricity": 0.0565,
+            "semimajor_axis_m": 1426666422000,
+            "scale_multiplier":5
+        },
+        "Uranus": {
+            "mass_kg": 8.6810e25,
+            "diameter_m": 50724000,
+            "color": [175, 238, 238],
+            "draw_radius": 0.45,
+            "eccentricity": 0.046381,
+            "semimajor_axis_m": 2870658186000,
+            "scale_multiplier":10
+        },
+        "Neptune": {
+            "mass_kg": 1.02413e26,
+            "diameter_m": 49244000,
+            "color": [72, 118, 255],
+            "draw_radius": 0.45,
+            "eccentricity": 0.008678,
+            "semimajor_axis_m": 4498396441000,
+            "scale_multiplier":10
+        }
+        }
+}

@@ -1,0 +1,15 @@
+G = 6.67430e-11
+N = 50 #used for dt calculation as denominator
+
+
+
+SECONDS_PER_DAY = 24 * 60 * 60
+DAY = SECONDS_PER_DAY * 1
+HOUR = 60*60
+MINUTE = 60
+MIN_TIME_WARP = 1
+MAX_TIME_WARP = 100
+time_warp = MIN_TIME_WARP
+
+SCREENW, SCREENH = 1200, 800
+CAMERA_POSITION = (SCREENW // 2, SCREENH // 2)
